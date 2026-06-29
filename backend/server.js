@@ -57,13 +57,18 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // ─── Start Server ───────────────────────────────────────────────
-connectDB(); // Initialize Mongoose connection
-seed(); // Seed database with initial data
-
-app.listen(config.PORT, () => {
-  console.log(`\n  JeevanSetu Backend API`);
-  console.log(`  ─────────────────────`);
-  console.log(`  Local:   http://localhost:${config.PORT}`);
-  console.log(`  Health:  http://localhost:${config.PORT}/api/health`);
-  console.log(`  CORS:    ${config.CORS_ORIGIN}\n`);
+// Modify this section at the bottom of your server.js
+connectDB().then(() => {
+  console.log("🚀 Database connected successfully! Running seed...");
+  seed(); // Only seed AFTER we are 100% connected
+  
+  app.listen(config.PORT, () => {
+    console.log(`\n  JeevanSetu Backend API`);
+    console.log(`  ─────────────────────`);
+    console.log(`  Local:   http://localhost:${config.PORT}`);
+    console.log(`  Health:  http://localhost:${config.PORT}/api/health`);
+    console.log(`  CORS:    ${config.CORS_ORIGIN}\n`);
+  });
+}).catch(err => {
+  console.error("❌ Failed to start server due to DB connection error:", err);
 });
