@@ -4,7 +4,7 @@
  * Base URL: http://localhost:5000/api
  */
 
-const API_BASE = (import.meta as any).env?.VITE_API_URL || 'https://team-udaan-final-project.onrender.com/api';
+const API_BASE = 'https://team-udaan-final-project.onrender.com/api';
 function getToken(): string | null {
   return localStorage.getItem('jeevansetu_token');
 }
